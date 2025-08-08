@@ -27,23 +27,19 @@
 </head>
 <body class="gradient-bg min-h-screen flex flex-col items-center justify-start p-4">
 
-  <!-- Botão PDF -->
   <div class="text-center my-6">
     <button onclick="gerarPDF()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
       Baixar Proposta em PDF
     </button>
   </div>
 
-  <!-- Documento da Proposta -->
   <div id="proposta" class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl p-8 md:p-12 mx-auto">
 
-    <!-- Cabeçalho -->
     <header class="mb-8 text-center">
       <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Proposta Comercial</h1>
       <p class="text-lg text-gray-500 mt-2">Shirabe Beauty Tech</p>
     </header>
 
-    <!-- Tabela de Preços -->
     <section class="mb-10">
       <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center">Tabela de Locação</h2>
       <p class="text-center text-gray-500 mb-6">Lavieen + Freddo<br><span class="text-sm">(Seg a Qui - 08h às 17h)</span></p>
@@ -60,10 +56,9 @@
       </div>
     </section>
 
-    <!-- Observações -->
     <section class="mb-10">
       <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-lg mb-4">
-        <p class="font-semibold">Acréscimo de R$ 100,00</p>
+        <p class="font-semibold">Acréscimo de R$ 200,00</p>
         <p>Para locações às Sextas, Sábados, Domingos e feriados e a partir das 18h.</p>
       </div>
       <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-lg">
@@ -72,7 +67,6 @@
       </div>
     </section>
 
-    <!-- Rodapé com Contato -->
     <section class="text-center pt-6 border-t">
       <h3 class="text-xl font-semibold text-gray-700 mb-4">Entre em Contato</h3>
       <p class="mb-2">
@@ -85,7 +79,6 @@
 
   </div>
 
-  <!-- Scripts PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
@@ -93,18 +86,41 @@
       const { jsPDF } = window.jspdf;
       const elemento = document.getElementById('proposta');
 
+      // Obtém as dimensões completas do elemento, incluindo a parte que pode estar fora da tela
+      const width = elemento.offsetWidth;
+      const height = elemento.offsetHeight;
+
       const canvas = await html2canvas(elemento, {
         scale: 2,
         useCORS: true,
-        scrollY: -window.scrollY
+        scrollY: -window.scrollY,
+        width: width,
+        height: height
       });
 
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
-      const imgHeight = (canvas.height * pageWidth) / canvas.width;
+      
+      // Calcula a altura da imagem proporcional à largura da página do PDF
+      const imgHeight = (height * pageWidth) / width;
+      let yPosition = 0;
 
-      pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, imgHeight);
+      // Adiciona a imagem em páginas separadas se a altura for maior que a página do PDF
+      if (imgHeight > pdf.internal.pageSize.getHeight()) {
+        let remainingHeight = imgHeight;
+        while (remainingHeight > 0) {
+          pdf.addImage(imgData, 'PNG', 0, yPosition, pageWidth, imgHeight);
+          remainingHeight -= pdf.internal.pageSize.getHeight();
+          yPosition -= pdf.internal.pageSize.getHeight();
+          if (remainingHeight > 0) {
+            pdf.addPage();
+          }
+        }
+      } else {
+        pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, imgHeight);
+      }
+
       pdf.save('proposta-shirabe.pdf');
     }
   </script>
