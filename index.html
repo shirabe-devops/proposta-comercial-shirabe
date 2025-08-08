@@ -1,121 +1,131 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Proposta Comercial - Shirabe Beauty Tech</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-    }
-    .gradient-bg {
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    }
-    .price-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px dashed #d1d5db;
-    }
-    .price-item:last-child {
-      border-bottom: none;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Proposta Comercial - Shirabe Beauty Tech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed #d1d5db;
+        }
+        .price-item:last-child {
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body class="gradient-bg min-h-screen flex flex-col items-center justify-start p-4">
 
-  <div class="text-center my-6">
-    <button onclick="gerarPDF()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-      Baixar Proposta em PDF
-    </button>
-  </div>
+    <div class="text-center my-6">
+        <button onclick="gerarPDF()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+            Baixar Proposta em PDF
+        </button>
+    </div>
 
-  <div id="proposta" class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl p-8 md:p-12 mx-auto">
+    <div id="proposta" class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl p-8 md:p-12 mx-auto">
 
-    <header class="mb-8 text-center">
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Proposta Comercial</h1>
-      <p class="text-lg text-gray-500 mt-2">Shirabe Beauty Tech</p>
-    </header>
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Proposta Comercial</h1>
+            <p class="text-lg text-gray-500 mt-2">Shirabe Beauty Tech</p>
+        </header>
 
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center">Tabela de Locação</h2>
-      <p class="text-center text-gray-500 mb-6">Lavieen + Freddo<br><span class="text-sm">(Seg a Qui - 08h às 17h)</span></p>
-      <div class="space-y-3">
-        <div class="price-item"><span>1 hora</span><strong>R$ 400,00</strong></div>
-        <div class="price-item"><span>2 horas</span><strong>R$ 500,00</strong></div>
-        <div class="price-item"><span>3 horas</span><strong>R$ 550,00</strong></div>
-        <div class="price-item"><span>4 horas</span><strong>R$ 650,00</strong></div>
-        <div class="price-item"><span>5 horas</span><strong>R$ 700,00</strong></div>
-        <div class="price-item"><span>6 horas</span><strong>R$ 800,00</strong></div>
-        <div class="price-item"><span>7 horas</span><strong>R$ 900,00</strong></div>
-        <div class="price-item"><span>8 horas</span><strong>R$ 1.000,00</strong></div>
-        <div class="price-item"><span>9-12 horas</span><strong>R$ 1.100,00</strong></div>
-      </div>
-    </section>
+        <section class="mb-10">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center">Tabela de Locação</h2>
+            <p class="text-center text-gray-500 mb-6">Lavieen + Freddo<br><span class="text-sm">(Seg a Qui - 08h às 17h)</span></p>
+            <div class="space-y-3">
+                <div class="price-item"><span>1 hora</span><strong>R$ 400,00</strong></div>
+                <div class="price-item"><span>2 horas</span><strong>R$ 500,00</strong></div>
+                <div class="price-item"><span>3 horas</span><strong>R$ 550,00</strong></div>
+                <div class="price-item"><span>4 horas</span><strong>R$ 650,00</strong></div>
+                <div class="price-item"><span>5 horas</span><strong>R$ 700,00</strong></div>
+                <div class="price-item"><span>6 horas</span><strong>R$ 800,00</strong></div>
+                <div class="price-item"><span>7 horas</span><strong>R$ 900,00</strong></div>
+                <div class="price-item"><span>8 horas</span><strong>R$ 1.000,00</strong></div>
+                <div class="price-item"><span>9-12 horas</span><strong>R$ 1.100,00</strong></div>
+            </div>
+        </section>
 
-    <section class="mb-10">
-      <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-lg mb-4">
-        <p class="font-semibold">Acréscimo de R$ 200,00</p>
-        <p>Para locações às Sextas, Sábados, Domingos e feriados e a partir das 18h.</p>
-      </div>
-      <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-lg">
-        <p class="font-semibold">Tabela para Maringá-PR</p>
-        <p>Para outras regiões, por favor, consulte o valor do frete.</p>
-      </div>
-    </section>
+        <section class="mb-10">
+            <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-lg mb-4">
+                <p class="font-semibold">Acréscimo de R$ 100,00</p>
+                <p>Para locações às Sextas, Sábados, Domingos e feriados e a partir das 18h.</p>
+            </div>
+            <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-lg">
+                <p class="font-semibold">Tabela para Maringá-PR</p>
+                <p>Para outras regiões, por favor, consulte o valor do frete.</p>
+            </div>
+        </section>
 
-    <section class="text-center pt-6 border-t">
-      <h3 class="text-xl font-semibold text-gray-700 mb-4">Entre em Contato</h3>
-      <p class="mb-2">
-        📱 <a href="https://wa.me/5544991846700" target="_blank" class="text-blue-600 hover:underline">44 99184-6700</a>
-      </p>
-      <p>
-        📸 <a href="https://instagram.com/shirabebeautytech" target="_blank" class="text-pink-500 hover:underline">@shirabebeautytech</a>
-      </p>
-    </section>
+        <section class="text-center pt-6 border-t">
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">Entre em Contato</h3>
+            <p class="mb-2">
+                📱 <a href="https://wa.me/5544991846700" target="_blank" class="text-blue-600 hover:underline">44 99184-6700</a>
+            </p>
+            <p>
+                📸 <a href="https://instagram.com/shirabebeautytech" target="_blank" class="text-pink-500 hover:underline">@shirabebeautytech</a>
+            </p>
+        </section>
 
-  </div>
+    </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script>
-    async function gerarPDF() {
-      const { jsPDF } = window.jspdf;
-      const elemento = document.getElementById('proposta');
-      
-      const canvas = await html2canvas(elemento, {
-        scale: 2,
-        useCORS: true,
-        windowWidth: elemento.scrollWidth,
-        windowHeight: elemento.scrollHeight
-      });
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        async function gerarPDF() {
+            const { jsPDF } = window.jspdf;
+            const elemento = document.getElementById('proposta');
 
-      const imgData = canvas.toDataURL('image/jpeg', 1.0);
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      
-      const imgWidth = pageWidth;
-      const imgHeight = canvas.height * imgWidth / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+            const pageWidth = 210; // Largura da página A4 em mm
+            const pageHeight = 297; // Altura da página A4 em mm
+            const margin = 10; // Margem para evitar cortes
+            const availableWidth = pageWidth - 2 * margin;
+            const availableHeight = pageHeight - 2 * margin;
 
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+            const elementoWidth = elemento.offsetWidth;
+            const elementoHeight = elemento.offsetHeight;
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+            // Calcula a escala para que a largura da imagem se ajuste à largura disponível na página
+            let scale = availableWidth / elementoWidth;
 
-      pdf.save('proposta-shirabe.pdf');
-    }
-  </script>
+            // Ajusta a escala se a altura também for muito grande
+            if (elementoHeight * scale > availableHeight) {
+              scale = availableHeight / elementoHeight;
+            }
+
+            const canvas = await html2canvas(elemento, {
+                scale: scale,
+                useCORS: true,
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: elementoWidth,
+                windowHeight: elementoHeight
+            });
+
+            const imgData = canvas.toDataURL('image/jpeg', 1.0);
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            const imgProps = pdf.getImageProperties(imgData);
+            const imgWidthPdf = imgProps.width / (imgProps.height / availableHeight);
+            const imgHeightPdf = availableHeight;
+
+            const xPosition = (pageWidth - imgWidthPdf) / 2;
+            const yPosition = (pageHeight - imgHeightPdf) / 2;
+
+            pdf.addImage(imgData, 'JPEG', xPosition, yPosition, imgWidthPdf, imgHeightPdf);
+            pdf.save('proposta-shirabe.pdf');
+        }
+    </script>
 
 </body>
 </html>
