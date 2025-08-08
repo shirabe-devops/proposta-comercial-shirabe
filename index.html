@@ -58,7 +58,7 @@
 
         <section class="mb-10">
             <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-lg mb-4">
-                <p class="font-semibold">Acréscimo de R$ 100,00</p>
+                <p class="font-semibold">Acréscimo de R$ 200,00</p>
                 <p>Para locações às Sextas, Sábados, Domingos e feriados e a partir das 18h.</p>
             </div>
             <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-lg">
@@ -82,49 +82,76 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        async function gerarPDF() {
-            const { jsPDF } = window.jspdf;
-            const elemento = document.getElementById('proposta');
+    async function gerarPDF() {
+        const { jsPDF } = window.jspdf;
+        const elemento = document.getElementById('proposta');
 
-            const pageWidth = 210; // Largura da página A4 em mm
-            const pageHeight = 297; // Altura da página A4 em mm
-            const margin = 10; // Margem para evitar cortes
-            const availableWidth = pageWidth - 2 * margin;
-            const availableHeight = pageHeight - 2 * margin;
+        // Cria um clone do elemento para manipulá-lo sem afetar a página
+        const clone = elemento.cloneNode(true);
+        clone.style.position = 'absolute';
+        clone.style.left = '-9999px';
+        document.body.appendChild(clone);
 
-            const elementoWidth = elemento.offsetWidth;
-            const elementoHeight = elemento.offsetHeight;
+        const elementoHeight = clone.offsetHeight;
+        const pageWidth = 210; // Largura do A4 em mm
+        const pageHeight = 297; // Altura do A4 em mm
+        const margin = 10;
+        const availableHeight = pageHeight - 2 * margin;
 
-            // Calcula a escala para que a largura da imagem se ajuste à largura disponível na página
-            let scale = availableWidth / elementoWidth;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const contentWidth = clone.offsetWidth;
 
-            // Ajusta a escala se a altura também for muito grande
-            if (elementoHeight * scale > availableHeight) {
-              scale = availableHeight / elementoHeight;
-            }
+        if (elementoHeight > availableHeight) {
+            // Se o conteúdo for maior que uma página, cria duas colunas
+            const columnWidth = (pageWidth - 3 * margin) / 2; // Largura para cada coluna
+            
+            // Renderiza a primeira coluna
+            const canvas1 = await html2canvas(clone, {
+                scale: 1,
+                useCORS: true,
+                x: 0,
+                y: 0,
+                width: contentWidth,
+                height: availableHeight
+            });
+            const imgData1 = canvas1.toDataURL('image/jpeg', 1.0);
+            const imgHeight1 = (canvas1.height * columnWidth) / canvas1.width;
+            pdf.addImage(imgData1, 'JPEG', margin, margin, columnWidth, imgHeight1);
 
-            const canvas = await html2canvas(elemento, {
+            // Renderiza a segunda coluna
+            const canvas2 = await html2canvas(clone, {
+                scale: 1,
+                useCORS: true,
+                x: 0,
+                y: availableHeight,
+                width: contentWidth,
+                height: elementoHeight - availableHeight
+            });
+            const imgData2 = canvas2.toDataURL('image/jpeg', 1.0);
+            const imgHeight2 = (canvas2.height * columnWidth) / canvas2.width;
+            pdf.addImage(imgData2, 'JPEG', 2 * margin + columnWidth, margin, columnWidth, imgHeight2);
+
+        } else {
+            // Se o conteúdo couber em uma página, redimensiona para caber
+            const scale = (pageWidth - 2 * margin) / contentWidth;
+            const canvas = await html2canvas(clone, {
                 scale: scale,
                 useCORS: true,
                 scrollX: 0,
-                scrollY: 0,
-                windowWidth: elementoWidth,
-                windowHeight: elementoHeight
+                scrollY: 0
             });
-
             const imgData = canvas.toDataURL('image/jpeg', 1.0);
-            const pdf = new jsPDF('p', 'mm', 'a4');
-
             const imgProps = pdf.getImageProperties(imgData);
             const imgWidthPdf = imgProps.width / (imgProps.height / availableHeight);
             const imgHeightPdf = availableHeight;
-
             const xPosition = (pageWidth - imgWidthPdf) / 2;
             const yPosition = (pageHeight - imgHeightPdf) / 2;
-
             pdf.addImage(imgData, 'JPEG', xPosition, yPosition, imgWidthPdf, imgHeightPdf);
-            pdf.save('proposta-shirabe.pdf');
         }
+
+        document.body.removeChild(clone);
+        pdf.save('proposta-shirabe.pdf');
+    }
     </script>
 
 </body>
