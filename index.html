@@ -85,40 +85,32 @@
     async function gerarPDF() {
       const { jsPDF } = window.jspdf;
       const elemento = document.getElementById('proposta');
-
-      // Obtém as dimensões completas do elemento, incluindo a parte que pode estar fora da tela
-      const width = elemento.offsetWidth;
-      const height = elemento.offsetHeight;
-
+      
       const canvas = await html2canvas(elemento, {
         scale: 2,
         useCORS: true,
-        scrollY: -window.scrollY,
-        width: width,
-        height: height
+        windowWidth: elemento.scrollWidth,
+        windowHeight: elemento.scrollHeight
       });
 
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
       
-      // Calcula a altura da imagem proporcional à largura da página do PDF
-      const imgHeight = (height * pageWidth) / width;
-      let yPosition = 0;
+      const imgWidth = pageWidth;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
 
-      // Adiciona a imagem em páginas separadas se a altura for maior que a página do PDF
-      if (imgHeight > pdf.internal.pageSize.getHeight()) {
-        let remainingHeight = imgHeight;
-        while (remainingHeight > 0) {
-          pdf.addImage(imgData, 'PNG', 0, yPosition, pageWidth, imgHeight);
-          remainingHeight -= pdf.internal.pageSize.getHeight();
-          yPosition -= pdf.internal.pageSize.getHeight();
-          if (remainingHeight > 0) {
-            pdf.addPage();
-          }
-        }
-      } else {
-        pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, imgHeight);
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
       }
 
       pdf.save('proposta-shirabe.pdf');
